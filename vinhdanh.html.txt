@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vinh Danh Nhân Viên</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            text-align: center;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #d4af37;
+            margin-bottom: 30px;
+        }
+        .input-section {
+            margin: 30px 0;
+        }
+        input {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+        }
+        button {
+            background-color: #d4af37;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #c9a227;
+        }
+        .letter {
+            margin: 30px auto;
+            padding: 30px;
+            border: 2px solid #d4af37;
+            border-radius: 5px;
+            text-align: left;
+            background: #fffdf6;
+            display: none;
+        }
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 30px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+        .company-logo {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Thay thế bằng logo công ty của bạn -->
+        <img src="https://via.placeholder.com/150x50?text=Company+Logo" alt="Logo công ty" class="company-logo">
+        
+        <h1>VINH DANH NHÂN VIÊN XUẤT SẮC</h1>
+        
+        <div class="input-section">
+            <p>Vui lòng nhập mã nhân viên của bạn:</p>
+            <input type="text" id="employeeCode" placeholder="VD: NV001">
+            <button onclick="showLetter()">Xem Thư Vinh Danh</button>
+            <p id="error-message" class="error">Mã nhân viên không hợp lệ. Vui lòng kiểm tra lại.</p>
+        </div>
+        
+        <div class="letter" id="personal-letter">
+            <!-- Nội dung thư sẽ được điền bằng JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Database chứa thông tin nhân viên
+        const employees = {
+            "NV001": {
+                name: "Nguyễn Văn A",
+                position: "Trưởng phòng Kinh doanh",
+                achievements: [
+                    "Đạt 150% chỉ tiêu doanh số năm 2023",
+                    "Dẫn đầu phong trào thi đua 3 quý liên tiếp",
+                    "Đào tạo thành công 5 nhân viên mới"
+                ],
+                quote: "Không gì là không thể với tinh thần làm việc nhóm!"
+            },
+            "NV002": {
+                name: "Trần Thị B",
+                position: "Chuyên viên Marketing",
+                achievements: [
+                    "Triển khai thành công chiến dịch X thu hút 10.000 khách hàng",
+                    "Thiết kế banner đạt giải thưởng sáng tạo",
+                    "Tăng tương tác fanpage lên 300%"
+                ],
+                quote: "Sáng tạo không ngừng là chìa khóa thành công"
+            },
+            "NV003": {
+                name: "Lê Hoàng C",
+                position: "Kỹ sư phần mềm",
+                achievements: [
+                    "Hoàn thành trước hạn dự án phần mềm XYZ",
+                    "Giải quyết 15 lỗi nghiêm trọng của hệ thống",
+                    "Đề xuất cải tiến tiết kiệm 200 giờ làm việc/năm"
+                ],
+                quote: "Code không chỉ là công việc, mà là đam mê"
+            }
+            // Thêm các nhân viên khác tại đây
+        };
+
+        function showLetter() {
+            const code = document.getElementById('employeeCode').value.toUpperCase();
+            const employee = employees[code];
+            const errorElement = document.getElementById('error-message');
+            
+            if (employee) {
+                // Ẩn thông báo lỗi nếu có
+                errorElement.style.display = 'none';
+                
+                // Tạo nội dung thư vinh danh
+                const letterDiv = document.getElementById('personal-letter');
+                letterDiv.innerHTML = `
+                    <h2>Kính gửi: ${employee.name}</h2>
+                    <h3>Chức vụ: ${employee.position}</h3>
+                    
+                    <p>Nhân dịp tổng kết năm 2023, Ban lãnh đạo công ty trân trọng ghi nhận những đóng góp xuất sắc của bạn:</p>
+                    
+                    <ul>
+                        ${employee.achievements.map(ach => `<li>${ach}</li>`).join('')}
+                    </ul>
+                    
+                    <p><i>"${employee.quote}"</i></p>
+                    
+                    <p>Những nỗ lực và thành tích của bạn đã góp phần quan trọng vào sự phát triển chung của công ty. 
+                    Chúng tôi tin tưởng rằng bạn sẽ tiếp tục phát huy và đạt được nhiều thành công hơn nữa trong thời gian tới.</p>
+                    
+                    <div class="signature">
+                        <p>Trân trọng,</p>
+                        <p><strong>Ban Lãnh đạo Công ty</strong></p>
+                        <!-- Có thể thêm chữ ký số hoặc hình ảnh chữ ký ở đây -->
+                    </div>
+                `;
+                
+                // Hiển thị thư
+                letterDiv.style.display = 'block';
+            } else {
+                // Hiển thị thông báo lỗi
+                errorElement.style.display = 'block';
+                document.getElementById('personal-letter').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
